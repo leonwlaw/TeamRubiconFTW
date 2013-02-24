@@ -45,7 +45,7 @@ function populate(){
 			   trlocaldb.transaction(
 					function (transaction) {
 						var obj = jQuery.parseJSON(data);
-						
+						transaction.executeSql("DELETE FROM WarehouseInfo");
 						for (var i = 0; i<obj.length; i++){
 							transaction.executeSql("INSERT INTO WarehouseInfo(wId, wName, itemId, itemType, catDesc, brandDesc, condDesc, condDetDesc, quantity, isBulk) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [obj[i][0], obj[i][1], obj[i][2], obj[i][3], obj[i][4], obj[i][5], obj[i][6], obj[i][7], obj[i][8], obj[i][9]]);
 						}
@@ -61,7 +61,7 @@ function populate(){
 			   trlocaldb.transaction(
 					function (transaction) {
 						var obj = jQuery.parseJSON(data);
-						
+						transaction.executeSql("DELETE FROM TeamInfo");
 						for (var i = 0; i<obj.length; i++){
 							transaction.executeSql("INSERT INTO TeamInfo(teamMapId, teamName, itemId, itemType, catDesc, brandDesc, condDesc, condDetDesc, quantity, isBulk) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [obj[i][0], obj[i][1], obj[i][2], obj[i][3], obj[i][4], obj[i][5], obj[i][6], obj[i][7], obj[i][8], obj[i][9]]);
 						}
