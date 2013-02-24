@@ -53,5 +53,6 @@ function display_item(itemData) {
     else {
         $('.single').hide();
         $('#item_quantity').val(itemData.quantity);
+        $('#item_name').text(itemData.wName);
     }
 }
