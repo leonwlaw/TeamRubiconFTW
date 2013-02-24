@@ -1,6 +1,3 @@
-/* Global Variables */
-var WAREHOUSE_ID = -1;
-
 /* Main entry point */
 $(function () {
     /* Load any relevant information from local storage... */
@@ -97,6 +94,7 @@ Returns:
     None
 */
 function get_inventory_contents(inventoryData, callback) {
+<<<<<<< Updated upstream
     switch (inventoryData.type) {
         case 'warehouse':
             query('SELECT * FROM WarehouseInfo WHERE wName="'+inventoryData.wName+'"', function(transaction, results) {
@@ -109,3 +107,9 @@ function get_inventory_contents(inventoryData, callback) {
             })
     }
 }
+=======
+    query('SELECT * FROM WarehouseInfo WHERE wName="'+inventoryData.wName+'"', function(transaction, results) {
+        callback(results);
+    })
+}
+>>>>>>> Stashed changes
