@@ -19,17 +19,16 @@ Side Effects:
 */
 function display_item(itemData) {
     // Update general fields...
-    $('.item_name').text(itemData.name);
-    $('.item_category').text(itemData.category);
-    $('.item_description').text(itemData.description);
-    $('#item_comment').text(itemData.comment);
+    $('.item_name').text(itemData.brandDesc);
+    $('.item_category').text(itemData.catDesc);
+    $('.item_description').text(itemData.itemType);
+    $('#item_comment').text(itemData.condDetDesc);
     // Hide all unrelevant fields.  We only want to show the user what 
     // is totally necessary.  Extraneous information is distracting.
     // Also update only what is actually shown.
 
     // Single Item
-    if (!itemData.isBulk) {
-        console.log(itemData);
+    if (itemData.isBulk == 'Unique') {
         $('.bulk').hide();
         $('#set_item_working').click(function () {
             itemData.is_working = true;
@@ -47,12 +46,13 @@ function display_item(itemData) {
             $('#set_item_working').click()
         else
             $('#set_item_not_working').click()
-        
+
+        itemData.quantity = $('#item_quantity').val;
+        itemData.condDetDesc = $('#item_comment').val;
     }
     // Bulk Item
     else {
         $('.single').hide();
         $('#item_quantity').val(itemData.quantity);
-        $('#item_name').text(itemData.wName);
     }
 }
