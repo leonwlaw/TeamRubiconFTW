@@ -53,7 +53,6 @@ Returns:
     None
 */
 function add_inventory_entry(inventoryData) {
-    console.log(inventoryData);
     var inventory_row = document.createElement('tr')
     var inventory_update_checkbox_cell = document.createElement('td')
     var inventory_name_cell = document.createElement('td')
