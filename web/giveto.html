@@ -1,9 +1,9 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html manifest="offline.manifest"> 
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>First Support - Add Warehouse</title>
+	<title>TeamRubiconFTW - Give</title>
     <link rel="stylesheet"  href="css/jquery.mobile-1.3.0.css">
     <link rel="stylesheet" href="_assets/css/jqm-demos.css">
     <link rel="shortcut icon" href="_assets/favicon.ico">
@@ -16,16 +16,17 @@
 
 <div data-role="dialog">
 	<div data-role="header" data-theme="d">
-		<h1>Add Warehouse</h1>
+		<h1>Give an Item</h1>
 	</div>
 
 	<div data-role="content" data-theme="c">
-		<p>Follow a warehouse and check it's inventory!</p>
-		<form action="select_inventory.html" rel="external" data-ajax="false">
-			<label for="warehouse">Enter Warehouse Name: </label>
-			<input type="text" name="warehouse" id="warehouse">
-			<label for="loginBtn"></label>
-			<button type="submit" id="loginBtn">Add Warehouse</button> 
+		<h1>Give Item</h1>
+		<p>Give an item to a team that needs it</p>
+		<form>
+			<label for="username">Team Name: </label>
+			<input type="text" name="username" id="username">
+			<label for="sendBtn">Send:</label>
+			<button type="submit" id="sendBtn">Login</button> 
 		</form>
 	</div>
 </div>
