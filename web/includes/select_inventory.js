@@ -33,10 +33,14 @@ Returns:
     None
 */
 function populate_inventory_entries() {
-    add_inventory_entry({ 'name': "Red", 'type': "team", 'update': true });
-    add_inventory_entry({ 'name': "Blu", 'type': "team", 'update': true });
-    add_inventory_entry({ 'name': "Gray Horde", 'type': "team", 'update': true });
-    add_inventory_entry({ 'name': "Mann Co.", 'type': "warehouse", 'update': true });
+    get_warehouses(function (results) {
+        for (var i = 0; i < results.rows.length; i++) {
+            var inventoryData = results.rows.item(i);
+            inventoryData.type = 'warehouse';
+            add_inventory_entry(inventoryData)
+        }
+    })
+
 }
 
 /*
@@ -58,7 +62,7 @@ function add_inventory_entry(inventoryData) {
     var inventory_name_cell = document.createElement('td')
     
     // Prepare the cells...
-    $(inventory_name_cell).text(inventoryData.name)
+    $(inventory_name_cell).text(inventoryData.wName)
     // When the user clicks on this cell, it should link them to the inventory page.
     .click(function () {
         view_inventory(inventoryData);
@@ -86,4 +90,24 @@ function add_inventory_entry(inventoryData) {
             $('#team_table_header').parent().append(inventory_row)
             break;
     }
+}
+
+/* 
+Purpose:
+    Retrieves the inventory's contents, based on the inventoryData.
+Arguments:
+    inventoryData: 
+        An assoc. arr. describing the inventory to look up.
+        It should contain a 'name' and a 'type'.
+    callback:
+        The function that should handle the returned data.
+Side Effects:
+    Retrieves rows from the local db.
+Returns:
+    None
+*/
+function get_warehouses(callback) {
+    query('SELECT DISTINCT wId, wName FROM WarehouseInfo;', function (transaction, results) {
+        callback(results);
+    })
 }

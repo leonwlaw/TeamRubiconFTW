@@ -4,8 +4,8 @@ var WAREHOUSE_ID = -1;
 /* Main entry point */
 $(function () {
     /* Load any relevant information from local storage... */
-    // WAREHOUSE_ID = localStorage.warehouseID;
-    populate_inventory_entries();
+    inventoryData = JSON.parse(localStorage.inventoryData);
+    populate_inventory_entries(inventoryData);
 })
 
 /*  view_item(itemData)
@@ -35,41 +35,12 @@ Side Effects:
 Returns:
     None
 */
-function populate_inventory_entries() {
-    get_inventory_contents('asdf', function (results) {
-        console.log("Begin")
+function populate_inventory_entries(inventoryData) {
+    get_inventory_contents(inventoryData, function (results) {
         for (var i = 0; i < results.rows.length; i++) {
             add_inventory_entry(results.rows.item(i))
-            // wId INT, wName VARCHAR(20), itemId INT, itemType VARCHAR(20), catDesc VARCHAR(20), brandDesc VARCHAR(100), condDesc VARCHAR(20), condDetDesc VARCHAR(20), quantity INT, isBulk VARCHAR(15))
-            // wID = warehouseID
-            //wName = warehouseName
-            //itemID = itemID
-            //itemType = "Shovel"
-            //catDesc = "Heavy Duty"
-            //brandDesc = "Model"
-            //condDesc = "usable"
-            //condDetDesc = "This shit is broken"
-            //quantity = qty
-            //isBulk = isBulk;
         }
-        console.log("End")
     })
-
-    //add_inventory_entry({
-    //    'id': 1, 'name': 'Axe', 'category': null, 'quantity': 100,
-    //    'isBulk': true, 'is_working': true, 'description': "Ssssssssslice!",
-    //    'comment': 'Needs some sharpening...'
-    //});
-    //add_inventory_entry({
-    //    'id': 2, 'name': 'Bucket', 'category': null, 'quantity': 50,
-    //    'isBulk': true, 'is_working': true, 'description': "Loads and loads of buckets.",
-    //    'comment': "They're really dirty though!"
-    //});
-    //add_inventory_entry({
-    //    'id': 3, 'name': 'Chainsaw EX 9000', 'category': 'Chainsaw', 'quantity': 1,
-    //    'isBulk': false, 'is_working': true, 'description': "Todd's tool of choice.",
-    //    'comment': 'Uses a lot of oil.'
-    //});
 }
 
 /*
@@ -90,6 +61,8 @@ function add_inventory_entry(itemData) {
     var item_name_cell = document.createElement('td')
     var item_quantity_cell = document.createElement('td')
     
+    console.log(itemData);
+
     // Load up the values...
     $(item_id_cell).text(itemData.wId);
     $(item_name_cell).text(itemData.itemType);
@@ -126,8 +99,7 @@ Returns:
     None
 */
 function get_inventory_contents(inventoryData, callback) {
-    // inventoryData.name 
-    query('select * from WarehouseInfo', function(transaction, results) {
+    query('SELECT * FROM WarehouseInfo WHERE wName="'+inventoryData.wName+'"', function(transaction, results) {
         callback(results);
     })
 }
