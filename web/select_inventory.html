@@ -11,6 +11,7 @@
     <script src="js/jquery.js"></script>
     <script src="_assets/js/jqm-demos.js"></script>
     <script src="js/jquery.mobile-1.3.0.js"></script>
+    <script src="includes/select_inventory.js"></script>
 </head>
 <body>
 <div data-role="page" class="jqm-demos" data-quicklinks="true">
@@ -32,26 +33,21 @@
         <div>
 			
 		<table>
-			<tr>
+			<tr id="team_table_header">
 				<th>Teams</th><th class='sync_column'>Sync</th>
 			</tr>
-           <tr><td><a href="#">Team Awesome</a></td><td class='sync_column'><input type="checkbox" /></td></tr>
-           <tr><td><a href="#">We Love Chainsaws</a></td><td class='sync_column'><input type="checkbox" /></td></tr>
-           <tr><td><a href="#">Humvee Finder</a></td><td class='sync_column'><input type="checkbox" /></td></tr>
 		</table>
-		
+		<a href="add_team.html"><input type="button" value="Add Team" /></a>
+
 		<table>
-			<tr>
+			<tr id="warehouse_table_header">
 				<th>Warehouses</th><th>Sync</th>
 			</tr>
-           <tr><td><a href="#">New York Warehouse #1</a></td><td class='sync_column'><input type="checkbox" /></td></tr>
-		   <tr><td><a href="#">New York Warehouse #2</a></td><td class='sync_column'><input type="checkbox" /></td></tr>
-		   <tr><td><a href="#">Long Island Warehouse</a></td><td class='sync_column'><input type="checkbox" /></td></tr>
 		</table>
 		
 		<!-- These links create a popup that prompts the user for input -->
 		<a href="add_warehouse.html"><input type="button" value="Add Warehouse" /></a>
-		<a href="add_team.html"><input type="button" value="Add Team" /></a>
+		
 		
 		
         </div>
