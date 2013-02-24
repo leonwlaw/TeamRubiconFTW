@@ -18,7 +18,19 @@ function navmenu_add_entry(str, is_header) {
 	document.write(output_str)
 }
 
+<<<<<<< HEAD
 navmenu_add_entry("Team Rubicon", true);
 navmenu_add_entry("<a href=\"./\" rel=\"external\" data-ajax=\"false\">Inventory</a>");
 navmenu_add_entry('<a href="./select_inventory.html" rel=\"external\" data-ajax=\"false\">Change Inventory</a>');
 navmenu_add_entry("<a href=\"login.html\" data-rel=\"dialog\">Sign In</a>");
+=======
+/*  When linking to other pages (and not a sub-page), if the page does not load, make 
+    sure to include the following properties into the <a> element: 
+        rel="external" data-ajax="false"
+*/
+
+navmenu_add_entry('Team Rubicon', true);
+navmenu_add_entry('<a href="./" rel="external" data-ajax="false">Inventory</a>');
+navmenu_add_entry('<a href="./select_inventory.html" rel="external" data-ajax="false">Change Inventory</a>');
+navmenu_add_entry('<a href="login.html" data-rel="dialog">Sign In</a>');
+>>>>>>> 107a63f94de792f6b436b190b90e7f15fe750cba

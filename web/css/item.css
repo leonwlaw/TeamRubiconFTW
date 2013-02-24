@@ -1,0 +1,15 @@
+/*
+* CSS File for the item page.
+*
+ -----------------------------------------------------------------------------------------------------------*/
+/* Item Status 
+    If the item is working, color the working button.
+    If the item isn't working, color the not working button.
+    */
+#set_item_working.item_is_working {
+	background-color: #00ff00;
+}
+
+#set_item_not_working.item_is_not_working {
+    background-color: #ff0000;
+}
