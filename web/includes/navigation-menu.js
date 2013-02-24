@@ -12,13 +12,13 @@ function navmenu_add_entry(str, is_header) {
 	
 	var output_str = "<li"
 	if (is_header)
-		output_str += " data-role=\"list-divider\""
+		output_str += " data-role=\"list-divider\" rel="
 	
 	output_str += '>'+str+'</li>'
 	document.write(output_str)
 }
 
 navmenu_add_entry("Team Rubicon", true);
-navmenu_add_entry("<a href=\"./\">Inventory</a>");
-navmenu_add_entry('<a href="./select_inventory.html">Change Inventory</a>');
+navmenu_add_entry("<a href=\"./\" rel=\"external\" data-ajax=\"false\">Inventory</a>");
+navmenu_add_entry('<a href="./select_inventory.html" rel=\"external\" data-ajax=\"false\">Change Inventory</a>');
 navmenu_add_entry("<a href=\"login.html\" data-rel=\"dialog\">Sign In</a>");

@@ -11,7 +11,7 @@ function initDatabase() {
 			createTables(trlocaldb);
 			selectAll();
 	    }
-	} catch(e) {
+	}catch(e){
  
 	    if (e == 2) {
 	        // Version number mismatch.
@@ -24,14 +24,15 @@ function initDatabase() {
 }
 
 function createTables(database){
-	database.transaction(function (tx) {  
-	   tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
+	database.transaction(function (tx) {
+	   tx.executeSql('CREATE TABLE IF NOT EXISTS WarehouseInfo(wId INT, wName VARCHAR(20), itemId INT, itemType VARCHAR(20), catDesc VARCHAR(20), brandDesc VARCHAR(100), condDesc VARCHAR(20), condDetDesc VARCHAR(20), quantity INT, isBulk VARCHAR(15));');
+	   tx.executeSql('CREATE TABLE IF NOT EXISTS TeamInfo(teamMapId INT, teamName VARCHAR(20), itemId INT, itemType VARCHAR(20), catDesc VARCHAR(20), brandDesc VARCHAR(20), condDesc VARCHAR(20), condDetDesc VARCHAR(20), quantity INT, isBulk VARCHAR(15));');
 	});
-	console.log("Created table");
-	//prePopulate();
+	populate();
 }
 
-function prePopulate(){
+function populate(){
+	
 	trlocaldb.transaction(
 	    function (transaction) {
 		//Optional Starter Data when page is initialized
@@ -43,7 +44,7 @@ function prePopulate(){
 
 function selectAll(){
 	trlocaldb.transaction(
-	    function (transaction) {
+	    function (transaction){
 	        transaction.executeSql("SELECT * FROM page_settings;", [], dataSelectHandler);
 	    }
 	);
@@ -77,7 +78,7 @@ function dataSelectHandler(transaction, results){
  
 }
 
-function updateSetting(){
+function update(dataObject){
 	trlocaldb.transaction(
 	    function (transaction) {
 	    	if($('#fname').val() != '') {
