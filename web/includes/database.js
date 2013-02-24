@@ -27,22 +27,54 @@ function createTables(database){
 	database.transaction(function (tx) {
 	   tx.executeSql('CREATE TABLE IF NOT EXISTS WarehouseInfo(wId INT, wName VARCHAR(20), itemId INT, itemType VARCHAR(20), catDesc VARCHAR(20), brandDesc VARCHAR(100), condDesc VARCHAR(20), condDetDesc VARCHAR(20), quantity INT, isBulk VARCHAR(15));');
 	   tx.executeSql('CREATE TABLE IF NOT EXISTS TeamInfo(teamMapId INT, teamName VARCHAR(20), itemId INT, itemType VARCHAR(20), catDesc VARCHAR(20), brandDesc VARCHAR(20), condDesc VARCHAR(20), condDetDesc VARCHAR(20), quantity INT, isBulk VARCHAR(15));');
+	   tx.executeSql('CREATE TABLE IF NOT EXISTS TimeStampLocal(timestamp DATETIME);');
 	});
 	populate();
 }
 
 function populate(){
-	
-	trlocaldb.transaction(
-	    function (transaction) {
-		//Optional Starter Data when page is initialized
-		var data = ['1','none','#B3B4EF','Helvetica','Porsche 911 GT3'];
-		transaction.executeSql("INSERT INTO page_settings(id, fname, bgcolor, font, favcar) VALUES (?, ?, ?, ?, ?)", [data[0], data[1], data[2], data[3], data[4]]);
-	    }
-	);
+	//Get the data
+	if (navigator.onLine){
+		//if online, then get the data from the server..first we get the Warehouse info
+		$.ajax({
+		   url: "http://ec2-75-101-184-135.compute-1.amazonaws.com/rubicon/scripts/update_requests.php",
+		   success: function(data){
+			   trlocaldb.transaction(
+					function (transaction) {
+						var obj = jQuery.parseJSON(data);
+						
+						for (var i = 0; i<obj.length; i++){
+							transaction.executeSql("INSERT INTO WarehouseInfo(wId, wName, itemId, itemType, catDesc, brandDesc, condDesc, condDetDesc, quantity, isBulk) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [obj[i][0], obj[i][1], obj[i][2], obj[i][3], obj[i][4], obj[i][5], obj[i][6], obj[i][7], obj[i][8], obj[i][9]]);
+						}
+					}
+				);	
+		   }
+		 });
+		 
+		 //Next we get the teams
+		 $.ajax({
+		   url: "http://ec2-75-101-184-135.compute-1.amazonaws.com/rubicon/scripts/getTeams.php",
+		   success: function(data){
+			   trlocaldb.transaction(
+					function (transaction) {
+						var obj = jQuery.parseJSON(data);
+						
+						for (var i = 0; i<obj.length; i++){
+							transaction.executeSql("INSERT INTO TeamInfo(teamMapId, teamName, itemId, itemType, catDesc, brandDesc, condDesc, condDetDesc, quantity, isBulk) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [obj[i][0], obj[i][1], obj[i][2], obj[i][3], obj[i][4], obj[i][5], obj[i][6], obj[i][7], obj[i][8], obj[i][9]]);
+						}
+					}
+				);	
+		   }
+		 });
+		 
+		 
+	}
 }
 
 function selectAll(){
+	var results = $.get("example.php", function() {
+	  alert("success");
+	})
 	trlocaldb.transaction(
 	    function (transaction){
 	        transaction.executeSql("SELECT * FROM page_settings;", [], dataSelectHandler);
