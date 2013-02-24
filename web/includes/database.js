@@ -1,3 +1,6 @@
+/* Global Variables */
+var trlocaldb;
+
 function initDatabase() {
 	try {
 	    if (!window.openDatabase) {
@@ -8,8 +11,8 @@ function initDatabase() {
 	        var displayName = 'TeamRubiconLocalDb';
 	        var maxSize = 500000; //  bytes
 	        trlocaldb = openDatabase(shortName, version, displayName, maxSize);
-			createTables(trlocaldb);
-			selectAll();
+	        createTables(trlocaldb);
+			//selectAll();
 	    }
 	}catch(e){
  
@@ -71,16 +74,21 @@ function populate(){
 	}
 }
 
-function selectAll(){
-	var results = $.get("example.php", function() {
-	  alert("success");
-	})
+
+function selectAll() {
+    var results = $.get("example.php", function () {
+        alert("success");
+    })
+}
+
+function query(sql_statement, handler){
 	trlocaldb.transaction(
-	    function (transaction){
-	        transaction.executeSql("SELECT * FROM page_settings;", [], dataSelectHandler);
+	    function (tx) {
+	        tx.executeSql(sql_statement, [], handler);
 	    }
 	);
 }
+
 
 function dataSelectHandler(transaction, results){
 	// Handle the results
@@ -127,4 +135,8 @@ function update(dataObject){
 		selectAll();
 }
 
-initDatabase();
+
+
+$(function () {
+    initDatabase();
+});

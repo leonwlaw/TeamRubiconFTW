@@ -36,6 +36,26 @@ Returns:
     None
 */
 function populate_inventory_entries() {
+    get_inventory_contents('asdf', function (results) {
+        console.log("Begin")
+        for (var i = 0; i < results.rows.length; i++) {
+            console.log(results.rows.item(i).text);
+            // wId INT, wName VARCHAR(20), itemId INT, itemType VARCHAR(20), catDesc VARCHAR(20), brandDesc VARCHAR(100), condDesc VARCHAR(20), condDetDesc VARCHAR(20), quantity INT, isBulk VARCHAR(15))
+            // wID = warehouseID
+            //wName = warehouseName
+            //itemID = itemID
+            //itemType = "Shovel"
+            //catDesc = "Heavy Duty"
+            //brandDesc = "Model"
+            //condDesc = "usable"
+            //condDetDesc = "This shit is broken"
+            //quantity = qty
+            //isBulk = isBulk;
+            
+        }
+        console.log("End")
+    })
+
     add_inventory_entry({
         'id': 1, 'name': 'Axe', 'category': null, 'quantity': 100,
         'isBulk': true, 'is_working': true, 'description': "Ssssssssslice!",
@@ -89,4 +109,26 @@ function add_inventory_entry(itemData) {
     // We can't add it directly because we need access to the <tbody> item
     // that is within the table.
     $('#inventory_table_header').parent().append(item_row)
+}
+
+
+/* 
+Purpose:
+    Retrieves the inventory's contents, based on the inventoryData.
+Arguments:
+    inventoryData: 
+        An assoc. arr. describing the inventory to look up.
+        It should contain a 'name' and a 'type'.
+    callback:
+        The function that should handle the returned data.
+Side Effects:
+    Retrieves rows from the local db.
+Returns:
+    None
+*/
+function get_inventory_contents(inventoryData, callback) {
+    // inventoryData.name 
+    query('select * from WarehouseInfo', function(transaction, results) {
+        callback(results);
+    })
 }
