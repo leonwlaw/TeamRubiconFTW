@@ -94,7 +94,6 @@ Returns:
     None
 */
 function get_inventory_contents(inventoryData, callback) {
-<<<<<<< Updated upstream
     switch (inventoryData.type) {
         case 'warehouse':
             query('SELECT * FROM WarehouseInfo WHERE wName="'+inventoryData.wName+'"', function(transaction, results) {
@@ -105,11 +104,6 @@ function get_inventory_contents(inventoryData, callback) {
             query('SELECT * FROM TeamInfo WHERE teamName="' + inventoryData.teamName+ '"', function (transaction, results) {
                 callback(results);
             })
+        break
     }
 }
-=======
-    query('SELECT * FROM WarehouseInfo WHERE wName="'+inventoryData.wName+'"', function(transaction, results) {
-        callback(results);
-    })
-}
->>>>>>> Stashed changes
