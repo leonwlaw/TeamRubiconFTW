@@ -60,11 +60,9 @@ function add_inventory_entry(itemData) {
     var item_id_cell = document.createElement('td')
     var item_name_cell = document.createElement('td')
     var item_quantity_cell = document.createElement('td')
-    
-    console.log(itemData);
 
     // Load up the values...
-    $(item_id_cell).text(itemData.wId);
+    $(item_id_cell).text(itemData.itemId);
     $(item_name_cell).text(itemData.itemType);
     $(item_quantity_cell).text(itemData.quantity);
     
@@ -99,7 +97,15 @@ Returns:
     None
 */
 function get_inventory_contents(inventoryData, callback) {
-    query('SELECT * FROM WarehouseInfo WHERE wName="'+inventoryData.wName+'"', function(transaction, results) {
-        callback(results);
-    })
+    switch (inventoryData.type) {
+        case 'warehouse':
+            query('SELECT * FROM WarehouseInfo WHERE wName="'+inventoryData.wName+'"', function(transaction, results) {
+                callback(results);
+            })
+        break;
+        case 'team':
+            query('SELECT * FROM TeamInfo WHERE teamName="' + inventoryData.teamName+ '"', function (transaction, results) {
+                callback(results);
+            })
+    }
 }

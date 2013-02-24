@@ -40,6 +40,14 @@ function populate_inventory_entries() {
             add_inventory_entry(inventoryData)
         }
     })
+	
+	get_teams(function (results) {
+        for (var i = 0; i < results.rows.length; i++) {
+            var inventoryData = results.rows.item(i);
+            inventoryData.type = 'team';
+            add_inventory_entry(inventoryData)
+        }
+    })
 
 }
 
@@ -61,12 +69,22 @@ function add_inventory_entry(inventoryData) {
     var inventory_update_checkbox_cell = document.createElement('td')
     var inventory_name_cell = document.createElement('td')
     
-    // Prepare the cells...
-    $(inventory_name_cell).text(inventoryData.wName)
-    // When the user clicks on this cell, it should link them to the inventory page.
-    .click(function () {
-        view_inventory(inventoryData);
-    })
+	// Prepare the cells...
+	switch (inventoryData.type) {
+		case 'warehouse':
+			$(inventory_name_cell).text(inventoryData.wName)
+			// When the user clicks on this cell, it should link them to the inventory page.
+			.click(function () {
+				view_inventory(inventoryData);
+			})
+			break;
+		case 'team':
+			$(inventory_name_cell).text(inventoryData.teamName)
+			// When the user clicks on this cell, it should link them to the inventory page.
+			.click(function () {
+				view_inventory(inventoryData);
+			})
+	}
 
     var inventory_update_checkbox = '<input type="checkbox">'
     $(inventory_update_checkbox).appendTo(inventory_update_checkbox_cell)
@@ -108,6 +126,27 @@ Returns:
 */
 function get_warehouses(callback) {
     query('SELECT DISTINCT wId, wName FROM WarehouseInfo;', function (transaction, results) {
+        callback(results);
+    })
+}
+
+
+/* 
+Purpose:
+    Retrieves the inventory's contents, based on the inventoryData.
+Arguments:
+    inventoryData: 
+        An assoc. arr. describing the inventory to look up.
+        It should contain a 'name' and a 'type'.
+    callback:
+        The function that should handle the returned data.
+Side Effects:
+    Retrieves rows from the local db.
+Returns:
+    None
+*/
+function get_teams(callback) {
+    query('SELECT * FROM TeamInfo;', function (transaction, results) {
         callback(results);
     })
 }
